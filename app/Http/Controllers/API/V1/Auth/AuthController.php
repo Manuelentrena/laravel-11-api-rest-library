@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    public function __construct(private readonly AuthServiceInterface $authService)
+    public function __construct(protected readonly AuthServiceInterface $authService)
     {
         parent::__construct();
     }
