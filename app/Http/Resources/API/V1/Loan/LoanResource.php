@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources\API\V1;
+namespace App\Http\Resources\API\V1\Loan;
 
+use App\Http\Resources\API\V1\Book\BookResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

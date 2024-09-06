@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Resources\API\V1;
+namespace App\Http\Resources\API\V1\Book;
 
+use App\Http\Resources\API\V1\Author\AuthorResource;
+use App\Http\Resources\API\V1\Genre\GenreResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

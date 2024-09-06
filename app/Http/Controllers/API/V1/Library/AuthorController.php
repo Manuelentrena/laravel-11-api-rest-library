@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\V1\Library;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Author\StoreAuthorRequest;
-use App\Http\Resources\API\V1\AuthorResource;
+use App\Http\Resources\API\V1\Author\AuthorCollection;
+use App\Http\Resources\API\V1\Author\AuthorResource;
 use App\Models\Author;
+use App\QueryFilters\ByName;
 use App\Services\API\V1\ApiResponseService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -14,10 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthorController extends Controller
 {
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         return ApiResponseService::success(
-            AuthorResource::collection(Author::paginate()),
+            new AuthorCollection(Author::query()->filter([ByName::class])->paginate()),
             "Authors retrieved succesfully"
         );
     }
