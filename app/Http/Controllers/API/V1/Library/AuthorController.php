@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthorController extends Controller
 {
 
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
         return ApiResponseService::success(
-            new AuthorCollection(Author::query()->filter([ByName::class])->paginate()),
+            new AuthorCollection(Author::query()->filter()->paginate()),
             "Authors retrieved succesfully"
         );
     }
