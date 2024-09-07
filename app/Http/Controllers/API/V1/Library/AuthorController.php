@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Library;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Author\StoreAuthorRequest;
+use App\Http\Requests\API\V1\Author\UpdatedAuthorRequest;
 use App\Http\Resources\API\V1\Author\AuthorCollection;
 use App\Http\Resources\API\V1\Author\AuthorResource;
 use App\Models\Author;
@@ -43,7 +44,7 @@ class AuthorController extends Controller
         );
     }
 
-    public function update(Request $request, Author $author): JsonResponse
+    public function update(UpdatedAuthorRequest $request, Author $author): JsonResponse
     {
         $author->update($request->validated());
 
