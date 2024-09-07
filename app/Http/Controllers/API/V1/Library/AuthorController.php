@@ -8,9 +8,7 @@ use App\Http\Requests\API\V1\Author\UpdatedAuthorRequest;
 use App\Http\Resources\API\V1\Author\AuthorCollection;
 use App\Http\Resources\API\V1\Author\AuthorResource;
 use App\Models\Author;
-use App\QueryFilters\ByName;
 use App\Services\API\V1\ApiResponseService;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
