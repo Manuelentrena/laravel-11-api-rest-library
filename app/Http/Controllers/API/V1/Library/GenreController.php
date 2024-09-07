@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\V1\Library;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\Genre\StoreGenreRequest;
+use App\Http\Requests\API\V1\Genre\UpdateGenreRequest;
 use App\Http\Resources\API\V1\Genre\GenreCollection;
 use App\Http\Resources\API\V1\Genre\GenreResource;
 use App\Models\Genre;
@@ -26,7 +28,7 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGenreRequest $request)
     {
         $genre = Genre::create($request->validated());
 
@@ -51,7 +53,7 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
         $genre->update($request->validated());
 
