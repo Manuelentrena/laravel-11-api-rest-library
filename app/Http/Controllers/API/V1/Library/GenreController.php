@@ -9,7 +9,6 @@ use App\Http\Resources\API\V1\Genre\GenreCollection;
 use App\Http\Resources\API\V1\Genre\GenreResource;
 use App\Models\Genre;
 use App\Services\API\V1\ApiResponseService;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GenreController extends Controller

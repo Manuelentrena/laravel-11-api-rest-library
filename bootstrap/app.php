@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\API\V1\ApiResponseService;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -30,4 +31,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $exception) {
             return ApiResponseService::notFound($exception->getMessage());
         });
+        $exceptions->render(function (QueryException $exception) {
+            return ApiResponseService::error($exception->errorInfo[2]);
+        });
+
     })->create();
