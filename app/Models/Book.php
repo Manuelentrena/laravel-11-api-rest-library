@@ -20,6 +20,7 @@ class Book extends Model
         "isbn",
         "pages",
         "stock",
+        "published_at",
     ];
 
     protected $filters = [

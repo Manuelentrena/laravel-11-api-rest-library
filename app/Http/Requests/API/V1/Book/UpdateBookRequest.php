@@ -24,9 +24,9 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             "author_id" => "required|exists:authors,id",
-            "genre_id" => "required|genres:genres,id",
+            "genre_id" => "required|exists:genres,id",
             "title" => "required|string|max:100|unique:books,title," . $this->route('book')->id,
-            "isbn" => ["required", "unique:books,title," . $this->route('book')->id, new Isbn13],
+            "isbn" => ["required", "min:13", "numeric", "unique:books,title," . $this->route('book')->id, new Isbn13],
             "pages" => "required|integer|min:1",
             "stock" => "required|integer|min:1",
             "published_at" => "required|date",
