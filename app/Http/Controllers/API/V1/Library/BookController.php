@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Library;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\V1\Controller;
 use App\Http\Requests\API\V1\Book\StoreBookRequest;
 use App\Http\Requests\API\V1\Book\UpdateBookRequest;
 use App\Http\Requests\API\V1\Book\UpdateBookStockRequest;
