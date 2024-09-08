@@ -8,10 +8,13 @@ class ApiResponseService
 {
     public static function success($data, $message = "Success", $code = Response::HTTP_OK): JsonResponse
     {
+        $arrayData = $data->toArray(request());
+
         return response()->json([
             'status' => 'success',
             'message' => $message,
-            'data' => $data,
+            'data' => $arrayData['results'] ?? $data,
+            'info' => $arrayData['info'] ?? null
         ], $code);
     }
     public static function error($message = "Error", $code = Response::HTTP_BAD_REQUEST): JsonResponse
