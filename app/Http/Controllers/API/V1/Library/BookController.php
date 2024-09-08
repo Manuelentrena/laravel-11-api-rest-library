@@ -31,7 +31,6 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request): JsonResponse
     {
-        $data = $request->validated();
         $book = Book::create($request->validated());
 
         return ApiResponseService::success(
@@ -82,7 +81,12 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-
+        if ($book->loans) {
+            return ApiResponseService::error(
+                'Book has one or more loans related',
+                Response::HTTP_CONFLICT,
+            );
+        }
 
         $book->delete();
 
