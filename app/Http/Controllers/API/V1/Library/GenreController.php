@@ -67,6 +67,13 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
+        if ($genre->books) {
+            return ApiResponseService::error(
+                'Genre has one or more books related',
+                Response::HTTP_CONFLICT,
+            );
+        }
+
         $genre->delete();
 
         return ApiResponseService::success(

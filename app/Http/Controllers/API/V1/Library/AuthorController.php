@@ -54,6 +54,13 @@ class AuthorController extends Controller
 
     public function destroy(Author $author): JsonResponse
     {
+        if ($author->books) {
+            return ApiResponseService::error(
+                'Author has one or more books related',
+                Response::HTTP_CONFLICT,
+            );
+        }
+
         $author->delete();
 
         return ApiResponseService::success(

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Library\BookController;
 use App\Http\Controllers\API\V1\Library\GenreController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\Auth\{
@@ -20,4 +21,6 @@ Route::prefix('auth')->group(function () {
 Route::prefix('library')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('authors', AuthorController::class);
     Route::apiResource('genres', GenreController::class);
+    Route::apiResource('books', BookController::class);
+    Route::patch('books/{book}/stock', [BookController::class, 'updateStock']);
 });
