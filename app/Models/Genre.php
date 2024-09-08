@@ -14,7 +14,7 @@ class Genre extends Model
     protected $fillable = ['name'];
 
     protected $filters = [
-        'name' => \App\QueryFilters\ByName::class,
+        'name' => \App\QueryFilters\ByTextCaseInsensitive::class,
     ];
 
     public function books(): HasMany
