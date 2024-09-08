@@ -24,7 +24,7 @@ trait Filterable
 
         foreach (request()->query() as $key => $value) {
             if (isset($filters[$key])) {
-                $classes[] = $filters[$key];
+                $classes[] = new $filters[$key]($key);
             }
         }
 
