@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\V1\Library\BookController;
 use App\Http\Controllers\API\V1\Library\GenreController;
+use App\Http\Controllers\API\V1\Library\LoanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\Auth\{
     LoginController,
@@ -23,4 +24,6 @@ Route::prefix('library')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('genres', GenreController::class);
     Route::apiResource('books', BookController::class);
     Route::patch('books/{book}/stock', [BookController::class, 'updateStock']);
+    Route::apiResource('loans', LoanController::class)
+        ->only(['index', 'store', 'show']);
 });
