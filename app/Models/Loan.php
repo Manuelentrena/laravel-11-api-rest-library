@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\Userscope;
+use App\Traits\Filterable;
 use App\Traits\HasUserId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Loan extends Model
 {
-    use HasFactory;
-    use HasUserId;
+    use HasFactory, Filterable, HasUserId;
 
     protected static function boot(): void
     {
@@ -27,6 +27,13 @@ class Loan extends Model
         "returned_at",
         "overdue_at",
         "is_returned",
+    ];
+
+    protected $filters = [
+        'is_returned' => \App\QueryFilters\ByBoolean::class,
+        'loaned_at' => \App\QueryFilters\ByDate::class,
+        'overdure_at' => \App\QueryFilters\ByDate::class,
+        'returned_at' => \App\QueryFilters\ByDate::class,
     ];
 
     protected function casts(): array
