@@ -18,7 +18,7 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return ApiResponseService::success(
             new BookCollection(Book::query()->with('author', 'genre')->filter()->paginate()),
@@ -43,7 +43,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Book $book): JsonResponse
     {
         return ApiResponseService::success(
             new BookResource($book->load('author', 'genre')),
@@ -79,7 +79,7 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book): JsonResponse
     {
         if ($book->loans) {
             return ApiResponseService::error(

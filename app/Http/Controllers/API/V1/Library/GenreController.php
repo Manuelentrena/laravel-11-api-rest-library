@@ -10,13 +10,14 @@ use App\Http\Resources\API\V1\Genre\GenreResource;
 use App\Models\Genre;
 use App\Services\API\V1\ApiResponseService;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
 
 class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return ApiResponseService::success(
             new GenreCollection(Genre::query()->filter()->paginate()),
@@ -27,7 +28,7 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGenreRequest $request)
+    public function store(StoreGenreRequest $request): JsonResponse
     {
         $genre = Genre::create($request->validated());
 
@@ -41,7 +42,7 @@ class GenreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Genre $genre)
+    public function show(Genre $genre): JsonResponse
     {
         return ApiResponseService::success(
             new GenreResource($genre),
@@ -52,7 +53,7 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, Genre $genre): JsonResponse
     {
         $genre->update($request->validated());
 
@@ -65,7 +66,7 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $genre)
+    public function destroy(Genre $genre): JsonResponse
     {
         if ($genre->books) {
             return ApiResponseService::error(
