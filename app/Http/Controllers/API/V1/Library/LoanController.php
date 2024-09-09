@@ -66,4 +66,37 @@ class LoanController extends Controller
             'Loan retrieved successfully',
         );
     }
+
+
+    public function returnLoan(Loan $loan): JsonResponse
+    {
+
+        if ($loan->is_returned) {
+            return ApiResponseService::error(
+                'The book was already returned',
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        if (!$loan->isOwner()) {
+            return ApiResponseService::error(
+                'You are not the owner of the loan',
+                Response::HTTP_FORBIDDEN,
+            );
+        }
+
+        $loan->update([
+            'is_returned' => true,
+            'returned_at' => now(),
+        ]);
+
+        $loan->book->update([
+            'stock' => $loan->book->stock + config('library.more_stock'),
+        ]);
+
+        return ApiResponseService::success(
+            new LoanResource($loan->load('book', 'book.author', 'book.genre')),
+            'Loan returned successfully',
+        );
+    }
 }
