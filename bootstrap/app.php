@@ -1,5 +1,7 @@
 <?php
 
+use App\Exceptions\API\V1\CreateLoanException;
+use App\Exceptions\API\V1\UpdateLoanException;
 use App\Services\API\V1\ApiResponseService;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
@@ -33,6 +35,12 @@ return Application::configure(basePath: dirname(__DIR__))
         });
         $exceptions->render(function (QueryException $exception) {
             return ApiResponseService::error($exception->errorInfo[2]);
+        });
+        $exceptions->render(function (CreateLoanException $exception) {
+            return ApiResponseService::error($exception->getMessage());
+        });
+        $exceptions->render(function (UpdateLoanException $exception) {
+            return ApiResponseService::error($exception->getMessage());
         });
 
     })->create();
