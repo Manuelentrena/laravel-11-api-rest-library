@@ -8,7 +8,10 @@ class ApiResponseService
 {
     public static function success($data, $message = "Success", $code = Response::HTTP_OK): JsonResponse
     {
-        $arrayData = $data->toArray(request());
+
+        if ($data instanceof \Illuminate\Contracts\Support\Arrayable) {
+            $arrayData = $data->toArray();
+        }
 
         return response()->json([
             'status' => 'success',
