@@ -39,7 +39,7 @@ class AuthSanctumService implements AuthServiceInterface
         return ApiResponseService::success([
             'token' => $token,
             'token_type' => 'bearer',
-        ]);
+        ], "User registered successfully");
     }
 
     public function logout(): JsonResponse
