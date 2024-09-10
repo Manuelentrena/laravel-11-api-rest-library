@@ -14,7 +14,7 @@ class AuthSanctumService implements AuthServiceInterface
             !auth()->attempt([
                 'email' => data_get($credentials, 'email'),
                 'password' => data_get($credentials, 'password'),
-            ])
+            ], )
         ) {
             return ApiResponseService::unauthorized();
         }
@@ -27,7 +27,7 @@ class AuthSanctumService implements AuthServiceInterface
         return ApiResponseService::success([
             'token' => $token,
             'token_type' => 'bearer',
-        ]);
+        ], "User logged in successfully");
     }
 
     public function register(array $data): JsonResponse

@@ -5,6 +5,129 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login a user",
+                "operationId": "20a1a5cf4679704f1ab0934844675f17",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "device_name",
+                        "in": "query",
+                        "description": "Device name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "User logged in successfully",
+                                    "data": {
+                                        "token": "string",
+                                        "token_type": "bearer"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "email": "The email field is required",
+                                        "password": "The password field is required",
+                                        "device_name": "The device name field is required"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout a user",
+                "operationId": "a44ae51d24417ea98c7fe99916fc4b10",
+                "responses": {
+                    "200": {
+                        "description": "Successful logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Successfully logged out",
+                                    "data": null,
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/v1/auth/register": {
             "post": {
                 "tags": [
@@ -69,8 +192,1863 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "name": "The name field is required",
+                                        "email": "The email field is required",
+                                        "password": "The password field is required",
+                                        "device_name": "The device name field is required"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        },
+        "/api/v1/library/authors": {
+            "get": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get all authors",
+                "operationId": "cf28383bf15c3811bc121d3fa0367ecf",
+                "responses": {
+                    "200": {
+                        "description": "Authors list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Authors retrieved successfully",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "J. K. Rowling",
+                                            "created_at": "2023-10-10T10:00:00Z"
+                                        }
+                                    ],
+                                    "pagination": "info"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Create a new author",
+                "operationId": "17064c6ad14e2f4bbf7ee41b313025d5",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Author name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Author created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Author created successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "J. K. Rowling",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "name": [
+                                            "The name field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/authors/{author}": {
+            "get": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get an author",
+                "operationId": "a7a4eab4ba0c93732bfafe0b5eefab6c",
+                "parameters": [
+                    {
+                        "name": "author",
+                        "in": "path",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Author details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Author retrieved successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "J. K. Rowling",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Author not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Author] 100"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Update an author",
+                "operationId": "3e4aafd6aa7dfe6838538fbe8e8f46bd",
+                "parameters": [
+                    {
+                        "name": "author",
+                        "in": "path",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Author name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Author updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Author updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "J. K. Rowling Updated!",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Author not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Author] 100"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "name": [
+                                            "The name field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Delete an author",
+                "operationId": "c1b6831bd89794fdde9f8a6fbcdef26a",
+                "parameters": [
+                    {
+                        "name": "author",
+                        "in": "path",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Author deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Author deleted successfully",
+                                    "data": null,
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Author not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Author] 100"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Author with related books",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "Author has one or more books related"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get all books",
+                "operationId": "d20ab4078ed21ff56fbe0fca6372b1d7",
+                "responses": {
+                    "200": {
+                        "description": "Books list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Books retrieved succesfully",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "title": "Harry Potter and the Philosopher's Stone",
+                                            "isbn": "978-3-16-148410-0",
+                                            "author": {
+                                                "id": 1,
+                                                "name": "J. K. Rowling"
+                                            },
+                                            "genre": {
+                                                "id": 1,
+                                                "name": "Fantasy"
+                                            },
+                                            "stock": 10,
+                                            "created_at": "2023-10-10T10:00:00Z"
+                                        }
+                                    ],
+                                    "pagination": "info"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create a new book",
+                "operationId": "983f31848ca4ee92b13866471d67c3fd",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Book title",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "isbn",
+                        "in": "query",
+                        "description": "Book ISBN",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "author_id",
+                        "in": "query",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "genre_id",
+                        "in": "query",
+                        "description": "Genre ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "stock",
+                        "in": "query",
+                        "description": "Book stock",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "pages",
+                        "in": "query",
+                        "description": "Book pages",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "published_at",
+                        "in": "query",
+                        "description": "Book published date",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Book created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Book created successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "title": "Harry Potter and the Philosopher's Stone",
+                                        "isbn": "978-3-16-148410-0",
+                                        "author": {
+                                            "id": 1,
+                                            "name": "J. K. Rowling"
+                                        },
+                                        "genre": {
+                                            "id": 1,
+                                            "name": "Fantasy"
+                                        },
+                                        "stock": 10,
+                                        "pages": 300,
+                                        "published_at": "2023-10-10T10:00:00Z",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "author_id": [
+                                            "The author_id field is required."
+                                        ],
+                                        "genre_id": [
+                                            "The genre_id field is required."
+                                        ],
+                                        "title": [
+                                            "The title field is required."
+                                        ],
+                                        "isbn": [
+                                            "The isbn field is required."
+                                        ],
+                                        "stock": [
+                                            "The stock field is required."
+                                        ],
+                                        "pages": [
+                                            "The pages field is required."
+                                        ],
+                                        "published_at": [
+                                            "The published_at field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/books/{book}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get a book",
+                "operationId": "9c1802dbee407f925cf829a660cbff64",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Book retrieved successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "title": "Harry Potter and the Philosopher's Stone",
+                                        "isbn": "978-3-16-148410-0",
+                                        "author": {
+                                            "id": 1,
+                                            "name": "J. K. Rowling"
+                                        },
+                                        "genre": {
+                                            "id": 1,
+                                            "name": "Fantasy"
+                                        },
+                                        "stock": 10,
+                                        "pages": 300,
+                                        "published_at": "2023-10-10T10:00:00Z",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Book] 100"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update a book",
+                "operationId": "0e43adc7e46114b8e6843864bc3033f5",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Book title",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "isbn",
+                        "in": "query",
+                        "description": "Book ISBN",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "author_id",
+                        "in": "query",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "genre_id",
+                        "in": "query",
+                        "description": "Genre ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "stock",
+                        "in": "query",
+                        "description": "Book stock",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "pages",
+                        "in": "query",
+                        "description": "Book pages",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "published_at",
+                        "in": "query",
+                        "description": "Book published date",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Book updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "title": "Harry Potter and the Philosopher's Stone",
+                                        "isbn": "978-3-16-148410-0",
+                                        "author": {
+                                            "id": 1,
+                                            "name": "J. K. Rowling"
+                                        },
+                                        "genre": {
+                                            "id": 1,
+                                            "name": "Fantasy"
+                                        },
+                                        "stock": 10,
+                                        "pages": 300,
+                                        "published_at": "2023-10-10T10:00:00Z",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Book] 100"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "author_id": [
+                                            "The author_id field is required."
+                                        ],
+                                        "genre_id": [
+                                            "The genre_id field is required."
+                                        ],
+                                        "isbn": [
+                                            "The isbn field is required."
+                                        ],
+                                        "title": [
+                                            "The title field is required."
+                                        ],
+                                        "stock": [
+                                            "The stock field is required."
+                                        ],
+                                        "pages": [
+                                            "The pages field is required."
+                                        ],
+                                        "published_at": [
+                                            "The published_at field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete a book",
+                "operationId": "6a87423dc01a992232208b63e43c6838",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Book deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Book] 100"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Book with loans related",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "Book has one or more loans related"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/books/{book}/stock": {
+            "patch": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update a book stock",
+                "operationId": "465eed2d376e0dd53ea07c25c548e81f",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "stock",
+                        "in": "query",
+                        "description": "Book stock",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Stock updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Stock updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "title": "Harry Potter and the Philosopher's Stone",
+                                        "author": {
+                                            "id": 1,
+                                            "name": "J. K. Rowling"
+                                        },
+                                        "genre": {
+                                            "id": 1,
+                                            "name": "Fantasy"
+                                        },
+                                        "stock": 10,
+                                        "pages": 300,
+                                        "published_at": "2023-10-10T10:00:00Z",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Book] 100"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "stock": [
+                                            "The stock field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/genres": {
+            "get": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Get all genres",
+                "operationId": "8e2ccb6a6db2895777a1ed0763fb43de",
+                "responses": {
+                    "200": {
+                        "description": "Genres list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Genre retrieved succesfully",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "Fantasía",
+                                            "created_at": "2023-10-10T10:00:00Z"
+                                        }
+                                    ],
+                                    "pagination": "info"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Create a new genre",
+                "operationId": "1e0bf0e4da787359ca3e7db568211502",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Genre name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Genre created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Genre created successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "Fantasía",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "name": [
+                                            "The name field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/genres/{genre}": {
+            "get": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Get a genre",
+                "operationId": "063e8431e5a039868278288fc8384324",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "path",
+                        "description": "Genre ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Genre details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Genre retrieved successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "Fantasía",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Genre not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Genre] 100"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Update a genre",
+                "operationId": "0342c7146eb7eb8687c13f694892c4ab",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "path",
+                        "description": "Genre ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Genre name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Genre updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Genre updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "Fantasy",
+                                        "created_at": "2023-10-10T10:00:00Z"
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Genre not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Genre] 100"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "name": [
+                                            "The name field is required."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Delete a genre",
+                "operationId": "2e1fa85e0e3270c12bb7fa782fa9e134",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "path",
+                        "description": "Genre ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Genre deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Genre deleted successfull",
+                                    "data": null,
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Genre not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Genre] 100"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Genre with related books",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "Genre has one or more books related"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/loans": {
+            "get": {
+                "tags": [
+                    "Loans"
+                ],
+                "summary": "Get all loans",
+                "operationId": "6db16a5a9f15ceac2fd32000531f9ec0",
+                "responses": {
+                    "200": {
+                        "description": "Loans list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Loan retrieved succesfully",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "book_id": 1,
+                                            "loaned_at": "2023-10-10T10:00:00Z",
+                                            "due_date": "2023-10-17T10:00:00Z",
+                                            "returned_at": null,
+                                            "returned": false,
+                                            "created_at": "2023-10-10T10:00:00Z",
+                                            "book": {
+                                                "id": 1,
+                                                "author_id": 1,
+                                                "genre_id": 1,
+                                                "title": "Harry Potter and the Philosopher's Stone",
+                                                "isbn": "9780590353427",
+                                                "pages": 223,
+                                                "stock": 5,
+                                                "published_at": "1997-06-26",
+                                                "created_at": "2023-10-10T10:00:00Z"
+                                            }
+                                        }
+                                    ],
+                                    "pagination": "info"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Loans"
+                ],
+                "summary": "Create a new loan",
+                "operationId": "6474198de2ee654830f5ce91a25c6531",
+                "parameters": [
+                    {
+                        "name": "book_id",
+                        "in": "query",
+                        "description": "Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Loan created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Loan created successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "book_id": 1,
+                                        "loaned_at": "2023-10-10T10:00:00Z",
+                                        "due_date": "2023-10-17T10:00:00Z",
+                                        "returned_at": null,
+                                        "returned": false,
+                                        "created_at": "2023-10-10T10:00:00Z",
+                                        "book": {
+                                            "id": 1,
+                                            "author": {
+                                                "id": 1,
+                                                "name": "J. K. Rowling"
+                                            },
+                                            "genre": {
+                                                "id": 1,
+                                                "name": "Fantasy"
+                                            },
+                                            "title": "Harry Potter and the Philosopher's Stone",
+                                            "isbn": "9780590353427",
+                                            "pages": 223,
+                                            "stock": 4,
+                                            "published_at": "1997-06-26",
+                                            "created_at": "2023-10-10T10:00:00Z"
+                                        }
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Book without stock",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The book is out of stock"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The given data was invalid",
+                                    "errors": {
+                                        "book_id": [
+                                            "The book_id is required"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/loans/{loan}": {
+            "get": {
+                "tags": [
+                    "Loans"
+                ],
+                "summary": "Get a loan",
+                "operationId": "a3c03a4c12d11598ac74b2cc059e8136",
+                "parameters": [
+                    {
+                        "name": "loan",
+                        "in": "path",
+                        "description": "Loan ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Loan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Loan retrieved successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "book_id": 1,
+                                        "loaned_at": "2023-10-10T10:00:00Z",
+                                        "due_date": "2023-10-17T10:00:00Z",
+                                        "returned_at": null,
+                                        "returned": false,
+                                        "created_at": "2023-10-10T10:00:00Z",
+                                        "book": {
+                                            "id": 1,
+                                            "title": "Harry Potter and the Philosopher's Stone",
+                                            "isbn": "9780590353427",
+                                            "pages": 223,
+                                            "stock": 4,
+                                            "published_at": "1997-06-26",
+                                            "created_at": "2023-10-10T10:00:00Z"
+                                        }
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Loan not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Loan] 100"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/library/loans/{loan}/return": {
+            "patch": {
+                "tags": [
+                    "Loans"
+                ],
+                "summary": "Return a loan",
+                "operationId": "60981a20d0bd13a2f4b61afe21acda12",
+                "parameters": [
+                    {
+                        "name": "loan",
+                        "in": "path",
+                        "description": "Loan ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Loan returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "success",
+                                    "message": "Loan returned successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "book_id": 1,
+                                        "loaned_at": "2023-10-10T10:00:00Z",
+                                        "due_date": "2023-10-17T10:00:00Z",
+                                        "returned_at": "2023-10-17T10:00:00Z",
+                                        "returned": true,
+                                        "created_at": "2023-10-10T10:00:00Z",
+                                        "book": {
+                                            "id": 1,
+                                            "title": "Harry Potter and the Philosopher's Stone",
+                                            "isbn": "9780590353427",
+                                            "pages": 223,
+                                            "stock": 5,
+                                            "published_at": "1997-06-26",
+                                            "created_at": "2023-10-10T10:00:00Z"
+                                        }
+                                    },
+                                    "pagination": null
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Loan already returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "The book was already returned"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not Owner",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "You are not the owner of the loan"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Loan not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "status": "error",
+                                    "message": "No query results for model [App\\Models\\Loan] 100"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "json"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         }
     },
@@ -78,6 +2056,22 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Authors",
+            "description": "Authors"
+        },
+        {
+            "name": "Books",
+            "description": "Books"
+        },
+        {
+            "name": "Genres",
+            "description": "Genres"
+        },
+        {
+            "name": "Loans",
+            "description": "Loans"
         }
     ],
     "components": {
