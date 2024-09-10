@@ -5,8 +5,7 @@ namespace App\Http\Controllers\API\V1\Library;
 use App\Http\Controllers\API\V1\Controller;
 use App\Http\Requests\API\V1\Genre\StoreGenreRequest;
 use App\Http\Requests\API\V1\Genre\UpdateGenreRequest;
-use App\Http\Resources\API\V1\Genre\GenreCollection;
-use App\Http\Resources\API\V1\Genre\GenreResource;
+use App\Http\Resources\API\V1\GenreResource;
 use App\Models\Genre;
 use App\Services\API\V1\ApiResponseService;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ class GenreController extends Controller
     public function index(): JsonResponse
     {
         return ApiResponseService::success(
-            new GenreCollection(Genre::query()->filter()->paginate()),
+            GenreResource::collection(Genre::query()->filter()->paginate())->resource,
             "Genre retrieved succesfully"
         );
     }

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\API\V1\Library;
 use App\Http\Controllers\API\V1\Controller;
 use App\Http\Requests\API\V1\Author\StoreAuthorRequest;
 use App\Http\Requests\API\V1\Author\UpdatedAuthorRequest;
-use App\Http\Resources\API\V1\Author\AuthorCollection;
-use App\Http\Resources\API\V1\Author\AuthorResource;
+use App\Http\Resources\API\V1\AuthorResource;
 use App\Models\Author;
 use App\Services\API\V1\ApiResponseService;
 use Illuminate\Http\JsonResponse;
@@ -18,8 +17,8 @@ class AuthorController extends Controller
     public function index(): JsonResponse
     {
         return ApiResponseService::success(
-            new AuthorCollection(Author::query()->filter()->paginate()),
-            "Authors retrieved succesfully"
+            AuthorResource::collection(Author::query()->filter()->paginate())->resource,
+            'Authors retrieved successfully',
         );
     }
 

@@ -6,8 +6,7 @@ use App\Http\Controllers\API\V1\Controller;
 use App\Http\Requests\API\V1\Book\StoreBookRequest;
 use App\Http\Requests\API\V1\Book\UpdateBookRequest;
 use App\Http\Requests\API\V1\Book\UpdateBookStockRequest;
-use App\Http\Resources\API\V1\Book\BookCollection;
-use App\Http\Resources\API\V1\Book\BookResource;
+use App\Http\Resources\API\V1\BookResource;
 use App\Models\Book;
 use App\Services\API\V1\ApiResponseService;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +20,7 @@ class BookController extends Controller
     public function index(): JsonResponse
     {
         return ApiResponseService::success(
-            new BookCollection(Book::query()->with('author', 'genre')->filter()->paginate()),
+            BookResource::collection(Book::query()->with('author', 'genre')->filter()->paginate())->resource,
             "Books retrieved succesfully"
         );
     }

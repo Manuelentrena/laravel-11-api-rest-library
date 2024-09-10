@@ -14,7 +14,7 @@ class ApiResponseService
             'status' => 'success',
             'message' => $message,
             'data' => $arrayData['results'] ?? $data,
-            'info' => $arrayData['info'] ?? null
+            'pagination' => $arrayData['pagination'] ?? null
         ], $code);
     }
     public static function error($message = "Error", $code = Response::HTTP_BAD_REQUEST): JsonResponse

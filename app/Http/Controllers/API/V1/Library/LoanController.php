@@ -5,8 +5,7 @@ namespace App\Http\Controllers\API\V1\Library;
 use App\Http\Actions\API\V1\Loan\LoanActions;
 use App\Http\Controllers\API\V1\Controller;
 use App\Http\Requests\API\V1\Loan\StoreLoanRequest;
-use App\Http\Resources\API\V1\Loan\LoanCollection;
-use App\Http\Resources\API\V1\Loan\LoanResource;
+use App\Http\Resources\API\V1\LoanResource;
 use App\Models\Book;
 use App\Models\Loan;
 use App\Services\API\V1\ApiResponseService;
@@ -18,7 +17,7 @@ class LoanController extends Controller
     public function index(): JsonResponse
     {
         return ApiResponseService::success(
-            new LoanCollection(Loan::query()->with('book')->filter()->paginate()),
+            LoanResource::collection(Loan::query()->with('book')->filter()->paginate())->resource,
             "Loan retrieved succesfully"
         );
     }
