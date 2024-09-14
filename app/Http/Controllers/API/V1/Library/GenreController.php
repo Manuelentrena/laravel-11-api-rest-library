@@ -37,7 +37,7 @@ class GenreController extends Controller
             schema: 'json',
             example: [
                 'status' => 'success',
-                'message' => 'Genre retrieved succesfully',
+                'message' => 'Genres retrieved successfully',
                 'data' => [
                     [
                         'id' => 1,
@@ -54,7 +54,7 @@ class GenreController extends Controller
     {
         return ApiResponseService::success(
             GenreResource::collection(Genre::query()->filter()->paginate())->resource,
-            "Genre retrieved succesfully"
+            "Genres retrieved successfully"
         );
     }
 
@@ -286,7 +286,7 @@ class GenreController extends Controller
     #[UnauthorizedResponseAttribute]
     public function destroy(Genre $genre): JsonResponse
     {
-        if ($genre->books) {
+        if (!$genre->books->isEmpty()) {
             return ApiResponseService::error(
                 'Genre has one or more books related',
                 Response::HTTP_CONFLICT,
