@@ -3,6 +3,8 @@
 namespace Tests\Feature\API\V1;
 
 use App\Models\Author;
+use App\Models\Book;
+use App\Models\Genre;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Group;
@@ -145,9 +147,7 @@ class AuthorsTest extends TestCase
 
         $response = $this
             ->withToken($token)
-            ->deleteJson(route('v1.authors.destroy', $author), [
-                "name" => "author_new_name",
-            ])
+            ->deleteJson(route('v1.authors.destroy', $author))
             ->assertJson([
                 'message' => 'Author deleted successfully',
                 'data' => null,
@@ -158,6 +158,33 @@ class AuthorsTest extends TestCase
         $this->assertCount(4, $response->json());
 
         $this->assertDatabaseMissing('authors', [
+            'id' => (int) $author->id,
+        ]);
+    }
+
+    #[Test]
+    public function an_author_can_not_be_deleted(): void
+    {
+        $token = User::factory()->create()->createToken('test')->plainTextToken;
+        $genre = Genre::factory()->create();
+        $author = Author::factory()->create();
+        Book::factory()->create([
+            'author_id' => $author->id,
+            'genre_id' => $genre->id,
+        ]);
+
+        $response = $this
+            ->withToken($token)
+            ->deleteJson(route('v1.authors.destroy', $author))
+            ->assertJson([
+                'status' => 'error',
+                'message' => 'Author has one or more books related',
+            ])
+            ->assertConflict();
+
+        $this->assertCount(2, $response->json());
+
+        $this->assertDatabaseHas('authors', [
             'id' => (int) $author->id,
         ]);
     }
