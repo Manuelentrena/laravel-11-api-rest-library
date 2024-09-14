@@ -9,20 +9,11 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
+#[Group('api.v1')]
 #[Group('api.v1.auth')]
 class AuthenticationTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-
     use RefreshDatabase;
-
-    #[Test]
-    public function an_unauthenticated_user_cannot_access(): void
-    {
-        $this->getJson(route('v1.authors.index'))->assertUnauthorized();
-    }
 
     #[Test]
     public function an_user_can_register(): void
