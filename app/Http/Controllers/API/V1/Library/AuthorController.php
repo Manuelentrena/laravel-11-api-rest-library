@@ -287,7 +287,7 @@ class AuthorController extends Controller
     #[UnauthorizedResponseAttribute]
     public function destroy(Author $author): JsonResponse
     {
-        if ($author->books) {
+        if (!$author->books->isEmpty()) {
             return ApiResponseService::error(
                 'Author has one or more books related',
                 Response::HTTP_CONFLICT,
