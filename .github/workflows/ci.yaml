@@ -49,17 +49,10 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader --no-suggest
 
-      - name: List files
-        run: |
-          ls -la
-          php --version
-
       - name: Prepare the application
         run: |
           cp .env.ci .env
           php artisan key:generate
-          cat .env
-          ls -la
 
       - name: Clear Config
         run: |
