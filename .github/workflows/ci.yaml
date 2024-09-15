@@ -58,7 +58,7 @@ jobs:
 
       - name: Prepare the application
         run: |
-          php -r "file_exists('.env.ci') || copy('.env.ci', '.env');"
+          cp .env.ci .env
           ls -la
           php artisan key:generate
 
