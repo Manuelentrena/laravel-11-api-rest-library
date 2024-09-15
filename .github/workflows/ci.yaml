@@ -51,6 +51,9 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader --no-suggest
 
+      - name: List files
+        run: ls -la
+
       - name: Prepare the application
         run: |
           php -r "file_exists('.env.ci') || copy('.env.ci', '.env');"
