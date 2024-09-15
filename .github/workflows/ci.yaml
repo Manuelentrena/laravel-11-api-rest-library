@@ -59,13 +59,15 @@ jobs:
       - name: Prepare the application
         run: |
           cp .env.ci .env
-          ls -la
           php artisan key:generate
+          cat .env
+          ls -la
 
       - name: Clear Config
         run: |
           php artisan config:clear
           php artisan config:cache
+
 
       - name: Migrate the database
         run: php artisan migrate --force
