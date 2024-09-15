@@ -52,11 +52,14 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader --no-suggest
 
       - name: List files
-        run: ls -la
+        run: |
+          ls -la
+          php --version
 
       - name: Prepare the application
         run: |
           php -r "file_exists('.env.ci') || copy('.env.ci', '.env');"
+          ls -la
           php artisan key:generate
 
       - name: Clear Config
