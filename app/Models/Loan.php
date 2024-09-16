@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Loan extends Model
 {
-    use HasFactory, Filterable, HasUserId;
+    use HasFactory;
+    use Filterable;
+    use HasUserId;
 
     protected static function boot(): void
     {

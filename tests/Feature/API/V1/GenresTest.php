@@ -15,17 +15,16 @@ use Tests\TestCase;
 #[Group('api.v1.genres')]
 class GenresTest extends TestCase
 {
-
     use RefreshDatabase;
 
     #[Test]
-    public function an_unauthenticated_genre_cannot_access(): void
+    public function anUnauthenticatedGenreCannotAccess(): void
     {
         $this->getJson(route('v1.genres.index'))->assertUnauthorized();
     }
 
     #[Test]
-    public function genres_can_be_retrieved(): void
+    public function genresCanBeRetrieved(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         Genre::factory(10)->create();
@@ -48,11 +47,10 @@ class GenresTest extends TestCase
                 ]
             ]
         ]);
-
     }
 
     #[Test]
-    public function an_genre_can_be_retrieved(): void
+    public function anGenreCanBeRetrieved(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $genre = Genre::factory()->create();
@@ -72,11 +70,10 @@ class GenresTest extends TestCase
             ->assertOk();
 
         $this->assertCount(4, $response->json());
-
     }
 
     #[Test]
-    public function an_genre_can_be_created(): void
+    public function anGenreCanBeCreated(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
 
@@ -108,7 +105,7 @@ class GenresTest extends TestCase
     }
 
     #[Test]
-    public function an_genre_can_be_updated(): void
+    public function anGenreCanBeUpdated(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $genre = Genre::factory()->create();
@@ -141,7 +138,7 @@ class GenresTest extends TestCase
     }
 
     #[Test]
-    public function an_genre_can_be_deleted(): void
+    public function anGenreCanBeDeleted(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $genre = Genre::factory()->create();
@@ -164,7 +161,7 @@ class GenresTest extends TestCase
     }
 
     #[Test]
-    public function an_genre_can_not_be_deleted(): void
+    public function anGenreCanNotBeDeleted(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $genre = Genre::factory()->create();

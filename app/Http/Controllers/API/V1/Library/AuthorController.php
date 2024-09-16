@@ -20,7 +20,6 @@ use OpenApi\Attributes\Post;
 use OpenApi\Attributes\Put;
 use OpenApi\Attributes\Schema;
 
-
 class AuthorController extends Controller
 {
     #[Get(

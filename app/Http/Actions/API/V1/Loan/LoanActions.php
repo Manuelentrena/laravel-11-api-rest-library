@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Actions\API\V1\Loan;
+
 use App\Exceptions\API\V1\UpdateLoanException;
 use App\Http\Requests\API\V1\Loan\StoreLoanRequest;
 use App\Exceptions\API\V1\CreateLoanException;

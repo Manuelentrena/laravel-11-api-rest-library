@@ -9,7 +9,8 @@ use App\Traits\Filterable;
 
 class Author extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory;
+    use Filterable;
 
     protected $fillable = ["name"];
 

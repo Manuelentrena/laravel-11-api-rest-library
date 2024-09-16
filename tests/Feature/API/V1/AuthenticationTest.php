@@ -16,48 +16,48 @@ class AuthenticationTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function an_user_can_register(): void
+    public function anUserCanRegister(): void
     {
-        $response = $this->postJson(route('v1.auth.register'), [
+        $response = $this->postJson(route("v1.auth.register"), [
             "name" => "Cursosdesarrolloweb",
             "email" => "api@cursosdesarrolloweb.es",
             "password" => "password",
             "device_name" => "testing"
         ])->assertOk();
 
-        $this->assertArrayHasKey('token', $response->json('data'));
-        $this->assertArrayHasKey('token_type', $response->json('data'));
+        $this->assertArrayHasKey("token", $response->json("data"));
+        $this->assertArrayHasKey("token_type", $response->json("data"));
     }
 
     #[Test]
-    public function an_user_can_login(): void
+    public function anUserCanLogin(): void
     {
 
         $user = User::factory()->create();
 
-        $response = $this->postJson(route('v1.auth.login'), [
+        $response = $this->postJson(route("v1.auth.login"), [
             "email" => $user->email,
-            "password" => 'password',
+            "password" => "password",
             "device_name" => "testing"
         ])->assertOk();
 
-        $this->assertArrayHasKey('token', $response->json('data'));
-        $this->assertArrayHasKey('token_type', $response->json('data'));
+        $this->assertArrayHasKey("token", $response->json("data"));
+        $this->assertArrayHasKey("token_type", $response->json("data"));
     }
 
     #[Test]
-    public function an_user_can_logout(): void
+    public function anUserCanLogout(): void
     {
 
         $user = User::factory()->create();
 
-        $token = $user->createToken('test')->plainTextToken;
+        $token = $user->createToken("test")->plainTextToken;
 
         $this->
             withToken($token)
-            ->postJson(route('v1.auth.logout'))
+            ->postJson(route("v1.auth.logout"))
             ->assertJson([
-                'message' => 'Successfully logged out',
+                "message" => "Successfully logged out",
             ])
             ->assertOk();
         $this->assertEmpty($user->tokens);

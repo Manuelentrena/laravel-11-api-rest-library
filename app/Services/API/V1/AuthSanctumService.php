@@ -14,7 +14,7 @@ class AuthSanctumService implements AuthServiceInterface
             !auth()->attempt([
                 'email' => data_get($credentials, 'email'),
                 'password' => data_get($credentials, 'password'),
-            ], )
+            ])
         ) {
             return ApiResponseService::unauthorized();
         }

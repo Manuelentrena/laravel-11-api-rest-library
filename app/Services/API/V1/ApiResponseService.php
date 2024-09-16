@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\API\V1;
+
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Genre extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory;
+    use Filterable;
 
     protected $fillable = ['name'];
 

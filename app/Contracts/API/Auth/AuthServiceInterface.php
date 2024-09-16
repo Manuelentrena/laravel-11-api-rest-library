@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Contracts\API\Auth;
+
 use Illuminate\Http\JsonResponse;
 
 interface AuthServiceInterface

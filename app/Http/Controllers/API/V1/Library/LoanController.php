@@ -68,7 +68,10 @@ class LoanController extends Controller
     public function index(): JsonResponse
     {
         return ApiResponseService::success(
-            LoanResource::collection(Loan::query()->with('book', 'book.author', 'book.genre')->filter()->paginate())->resource,
+            LoanResource::collection(Loan::query()
+                ->with('book', 'book.author', 'book.genre')
+                ->filter()
+                ->paginate())->resource,
             "Loan retrieved succesfully"
         );
     }

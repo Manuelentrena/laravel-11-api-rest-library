@@ -18,13 +18,13 @@ class AuthorsTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function an_unauthenticated_user_cannot_access(): void
+    public function anUnauthenticatedUserCannotAccess(): void
     {
         $this->getJson(route('v1.authors.index'))->assertUnauthorized();
     }
 
     #[Test]
-    public function authors_can_be_retrieved(): void
+    public function authorsCanBeRetrieved(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         Author::factory(10)->create();
@@ -47,11 +47,10 @@ class AuthorsTest extends TestCase
                 ]
             ]
         ]);
-
     }
 
     #[Test]
-    public function an_author_can_be_retrieved(): void
+    public function anAuthorCanBeRetrieved(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $author = Author::factory()->create();
@@ -71,11 +70,10 @@ class AuthorsTest extends TestCase
             ->assertOk();
 
         $this->assertCount(4, $response->json());
-
     }
 
     #[Test]
-    public function an_author_can_be_created(): void
+    public function anAuthorCanBeCreated(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
 
@@ -107,7 +105,7 @@ class AuthorsTest extends TestCase
     }
 
     #[Test]
-    public function an_author_can_be_updated(): void
+    public function anAuthorCanBeUpdated(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $author = Author::factory()->create();
@@ -140,7 +138,7 @@ class AuthorsTest extends TestCase
     }
 
     #[Test]
-    public function an_author_can_be_deleted(): void
+    public function anAuthorCanBeDeleted(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $author = Author::factory()->create();
@@ -163,7 +161,7 @@ class AuthorsTest extends TestCase
     }
 
     #[Test]
-    public function an_author_can_not_be_deleted(): void
+    public function anAuthorCanNotBeDeleted(): void
     {
         $token = User::factory()->create()->createToken('test')->plainTextToken;
         $genre = Genre::factory()->create();
@@ -188,5 +186,4 @@ class AuthorsTest extends TestCase
             'id' => (int) $author->id,
         ]);
     }
-
 }
