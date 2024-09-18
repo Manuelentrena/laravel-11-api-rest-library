@@ -53,6 +53,7 @@ jobs:
         run: |
           cp .env.testing .env
           php artisan key:generate
+          sed -i 's/DB_HOST=postgresql/DB_HOST=localhost/' .env
 
       - name: Clear Config
         run: |
@@ -64,6 +65,4 @@ jobs:
 
       - name: Run tests
         run: php artisan test --testsuite=Feature
-        env:
-          DB_HOST: localhost # Aqui el host es localhost
 
