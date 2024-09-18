@@ -64,4 +64,6 @@ jobs:
 
       - name: Run tests
         run: php artisan test --testsuite=Feature
+        env:
+          DB_HOST: localhost # Aqui el host es localhost
 
