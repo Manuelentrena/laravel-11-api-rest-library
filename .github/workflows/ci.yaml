@@ -86,5 +86,5 @@ jobs:
           echo ${{ secrets.GH_SECRET }} | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
       - name: Build and Publish
         run: |
-          docker build . --tag ${{ env.REGISTRY }}/${{ env.REGISTRY }}
-          docker push ${{ env.REGISTRY }}/${{ env.REGISTRY }}
+          docker build . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
