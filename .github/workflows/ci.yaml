@@ -81,9 +81,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: donwcase IMAGE_NAME
-        run: |
-          echo "IMAGE_NAME=${env.IMAGE_NAME,,}" >> ${GITHUB_ENV}
       - name: Login
         run: |
           echo ${{ secrets.GH_SECRET }} | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
